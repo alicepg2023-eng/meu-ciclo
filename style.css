@@ -1,0 +1,122 @@
+:root{
+  --bg1: #fbf8ff;
+  --bg2: #f3edff;
+
+  --card: #ffffff;
+  --border: #eadfff;
+
+  --title: #2b1b46;
+  --text: #3b2a5a;
+  --muted: #6b5a86;
+
+  --primary: #a78bfa;   /* lilás */
+  --primary2: #f7b7d6;  /* rosinha */
+  --shadow: 0 14px 30px rgba(167, 139, 250, 0.18);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+  color: var(--text);
+  padding: 28px;
+}
+
+h1{
+  margin: 0 0 6px 0;
+  font-size: 38px;
+  color: var(--title);
+}
+
+.subtitulo{
+  margin: 0 0 18px 0;
+  color: var(--muted);
+}
+
+.container{
+  max-width: 760px;
+}
+
+.formulario{
+  background: linear-gradient(180deg, #ffffff, #fffaff);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+label{
+  display: block;
+  font-weight: 700;
+  margin: 12px 0 6px;
+  color: var(--title);
+}
+
+input{
+  width: 100%;
+  padding: 12px 12px;
+  border: 1px solid #dccfff;
+  border-radius: 14px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+}
+
+input:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.22);
+}
+
+button{
+  margin-top: 14px;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(90deg, var(--primary), var(--primary2));
+  box-shadow: 0 12px 18px rgba(167, 139, 250, 0.25);
+  transition: transform 0.08s ease, filter 0.2s ease;
+}
+
+button:hover{ filter: brightness(1.03); }
+button:active{ transform: translateY(1px) scale(0.99); }
+
+h2{
+  margin: 22px 0 10px;
+  font-size: 28px;
+  color: var(--title);
+}
+
+#historico .item{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  box-shadow: 0 10px 22px rgba(43, 27, 70, 0.06);
+}
+
+#historico p{
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+#historico strong{
+  color: var(--title);
+}
+
+button.apagar{
+  background: linear-gradient(90deg, var(--primary), var(--primary2));
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 18px rgba(167, 139, 250, 0.25);
+}
+
+
+button.apagar:hover{
+  background: #faf6ff;
+}
