@@ -120,3 +120,34 @@ button.apagar{
 button.apagar:hover{
   background: #faf6ff;
 }
+/* Ajustes para celular */
+@media (max-width: 600px){
+
+  body{
+    padding: 16px;
+  }
+
+  h1{
+    font-size: 28px;
+  }
+
+  h2{
+    font-size: 22px;
+  }
+
+  .formulario{
+    padding: 14px;
+  }
+
+  input{
+    font-size: 16px;
+  }
+
+  button{
+    width: 100%;
+  }
+
+  #historico .item{
+    padding: 12px;
+  }
+}
