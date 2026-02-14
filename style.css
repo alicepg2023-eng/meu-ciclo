@@ -150,4 +150,25 @@ button.apagar:hover{
   #historico .item{
     padding: 12px;
   }
+.editor{
+  margin-top: 12px;
+}
+
+.acoes{
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.editor input{
+  margin-bottom: 10px;
+}
+button.editar,
+button.finalizar{
+  background: linear-gradient(90deg, var(--primary), var(--primary2));
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 18px rgba(167, 139, 250, 0.25);
+  margin-right: 8px;
 }

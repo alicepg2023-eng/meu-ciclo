@@ -4,17 +4,25 @@ const botaoSalvar = document.getElementById("salvar");
 const divHistorico = document.getElementById("historico");
 
 let registros = JSON.parse(localStorage.getItem("registros")) || [];
+let editandoIndex = null; // null = não está editando
+
+function salvarNoNavegador() {
+  localStorage.setItem("registros", JSON.stringify(registros));
+}
 
 function calcularDias(inicio, fim) {
+  if (!fim) return null;
   const dataInicio = new Date(inicio);
   const dataFim = new Date(fim);
-
-  // diferença em milissegundos
   const diff = dataFim - dataInicio;
+  return Math.round(diff / (1000 * 60 * 60 * 24)) + 1;
+}
 
-  // converte para dias
-  const dias = Math.round(diff / (1000 * 60 * 60 * 24)) + 1; // +1 pra contar o dia inicial também
-  return dias;
+function limparFormulario() {
+  inputInicio.value = "";
+  inputFim.value = "";
+  editandoIndex = null;
+  botaoSalvar.textContent = "Salvar";
 }
 
 function renderizarHistorico() {
@@ -33,8 +41,11 @@ function renderizarHistorico() {
 
     item.innerHTML = `
       <p><strong>Início:</strong> ${registro.inicio}</p>
-      <p><strong>Fim:</strong> ${registro.fim}</p>
-      <p><strong>Duração:</strong> ${dias} dia(s)</p>
+      <p><strong>Fim:</strong> ${registro.fim ? registro.fim : "— (ainda não)"}</p>
+      <p><strong>Duração:</strong> ${dias ? dias + " dia(s)" : "—"}</p>
+
+      ${registro.fim ? "" : `<button class="finalizar" data-index="${index}">Finalizar</button>`}
+      <button class="editar" data-index="${index}">Editar</button>
       <button class="apagar" data-index="${index}">Apagar</button>
       <hr>
     `;
@@ -42,12 +53,45 @@ function renderizarHistorico() {
     divHistorico.appendChild(item);
   });
 
+  // Apagar
   document.querySelectorAll(".apagar").forEach((btn) => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.index);
       registros.splice(i, 1);
-      localStorage.setItem("registros", JSON.stringify(registros));
+      salvarNoNavegador();
+      // se estava editando esse item, cancela a edição
+      if (editandoIndex === i) limparFormulario();
       renderizarHistorico();
+    });
+  });
+
+  // Editar (usa os inputs de cima -> abre calendário)
+  document.querySelectorAll(".editar").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.index);
+      editandoIndex = i;
+
+      inputInicio.value = registros[i].inicio;
+      inputFim.value = registros[i].fim || "";
+
+      botaoSalvar.textContent = "Salvar alterações";
+      inputInicio.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputInicio.focus(); // no celular, tocar abre o calendário quando clicar no campo
+    });
+  });
+
+  // Finalizar (também usa inputs de cima)
+  document.querySelectorAll(".finalizar").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.index);
+      editandoIndex = i;
+
+      inputInicio.value = registros[i].inicio;
+      inputFim.value = ""; // foco no fim
+      botaoSalvar.textContent = "Salvar alterações";
+
+      inputFim.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputFim.focus();
     });
   });
 }
@@ -56,22 +100,26 @@ botaoSalvar.addEventListener("click", () => {
   const inicio = inputInicio.value;
   const fim = inputFim.value;
 
-  if (!inicio || !fim) {
-    alert("Preencha as duas datas 🙂");
+  if (!inicio) {
+    alert("Preencha pelo menos a data de início 🙂");
     return;
   }
 
-  // validação: fim não pode ser antes do início
-  if (fim < inicio) {
+  if (fim && fim < inicio) {
     alert("A data de fim não pode ser antes da data de início 🙂");
     return;
   }
 
-  registros.push({ inicio, fim });
-  localStorage.setItem("registros", JSON.stringify(registros));
+  // Se está editando, atualiza; se não, cria novo
+  if (editandoIndex !== null) {
+    registros[editandoIndex].inicio = inicio;
+    registros[editandoIndex].fim = fim || "";
+  } else {
+    registros.push({ inicio, fim: fim || "" });
+  }
 
-  inputInicio.value = "";
-  inputFim.value = "";
+  salvarNoNavegador();
+  limparFormulario();
   renderizarHistorico();
 });
 
