@@ -172,3 +172,34 @@ button.finalizar{
   box-shadow: 0 12px 18px rgba(167, 139, 250, 0.25);
   margin-right: 8px;
 }
+/* Botão de tema */
+.botao-tema{
+  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+/* MODO ESCURO */
+.dark{
+  background: #1a1625;
+  color: #f5f3ff;
+}
+
+.dark .formulario,
+.dark #historico .item{
+  background: #2a2438;
+  border-color: #3d3455;
+}
+
+.dark input{
+  background: #1f1b2d;
+  color: #fff;
+  border-color: #4a3f6a;
+}
+
+.dark h1,
+.dark h2,
+.dark strong{
+  color: #e9ddff;
+}
